@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IDatastructure.cs" />
     <Compile Include="List.cs" />
+    <Compile Include="MinMaxHeap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
