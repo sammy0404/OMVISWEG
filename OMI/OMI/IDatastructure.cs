@@ -4,12 +4,12 @@ namespace OMI
 {
     interface IDatastructure
     {
-        IDatastructure Build(List<KeyValuePair<int, object>> values);
+        void Build(List<KeyValuePair<int, object>> values);
 
         bool TryAdd(KeyValuePair<int, object> kvp);
         bool TryDelete(int i);
 
-        object Search(int i);
+        KeyValuePair<int, object> Search(int i);
 
         object GetMin();
         object GetMax();
