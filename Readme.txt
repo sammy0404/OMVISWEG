@@ -24,10 +24,10 @@ Aannames:
   -Toevoegen/Verwijderen
 
 -Datastructuren
-  -Min-maxheap (gecombineerd)
+  -Min-maxheap (gecombineerd) (Sam)
   -Lijst (William) evt. inclusief sortedlist in C#
   -Gebalanceerde boom (kiezen) (Erik)
-  -Hashlijst (kiezen)
+  -Hashlijst (kiezen) (Gerben)
 
 Criteria:
 -Snelheid op:
