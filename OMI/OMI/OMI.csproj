@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AVLTree.cs" />
     <Compile Include="IDatastructure.cs" />
     <Compile Include="List.cs" />
     <Compile Include="MinMaxHeap.cs" />
