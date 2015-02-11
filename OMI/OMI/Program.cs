@@ -12,9 +12,6 @@ namespace OMI
 
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-
-=======
             Program p = new Program();
             
             p.seedTestData();
@@ -22,10 +19,13 @@ namespace OMI
             switch (Console.ReadLine()[0])
             {
                 case 'T':
-                    DS = new AVLTree();
+                    //DS = new AVLTree();
                     break;
                 case 'L':
                     DS = new List();
+                    break;
+                case 'H':
+                    DS = new HashTable(60);
                     break;
                 default:
                     DS = new MinMaxHeap();
@@ -39,6 +39,7 @@ namespace OMI
                 var kvp = p.testData[rnd.Next(p.testData.Count)];
                 bool found = kvp.Equals(DS.Search(kvp.Key));
                 Console.WriteLine(found + " " + kvp.Value);
+                Console.WriteLine("minimum: " + DS.ExtractMin().Value + "; maximum: " + DS.ExtractMax().Value);
             }
             
             Console.Read();
@@ -56,7 +57,6 @@ namespace OMI
                 HS.Add(new KeyValuePair<int, object>(key, value));
             }
             testData.AddRange(HS);
->>>>>>> eec6b88d42621c20a0ceb91d7dc20701ad225f7f
         }
     }
 }
