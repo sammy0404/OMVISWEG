@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Policy;
 
 namespace OMI
 {
@@ -20,6 +21,7 @@ namespace OMI
             {
                 int index = v.Key%hashList.Length;
                 hashList[index].Insert(v);
+                Console.WriteLine("inserted: "+ v.Key);
             }
         }
 
@@ -43,77 +45,99 @@ namespace OMI
             return new KeyValuePair<int, object>(i, hashList[index].Find(i));
         }
 
-        public object GetMin()
+        public KeyValuePair<int, object> GetMin()
         {
             if (hashList.Length == 0)
-                return null;
+                return new KeyValuePair<int, object>(-1,null);
+            var currentMin = hashList[0].GetMin();
+            for (int i = 1; i < hashList.Length; i++)
+            {
+                var thisMin = hashList[i].GetMin();
+                if (thisMin == null)
+                    continue;
+                if (currentMin == null || thisMin.Key < currentMin.Key)
+                    currentMin = thisMin;
+            }
+            return new KeyValuePair<int, object>(currentMin.Key, currentMin.Value);
+        }
+
+        public KeyValuePair<int, object> GetMax()
+        {
+            if (hashList.Length == 0)
+                return new KeyValuePair<int, object>(-1,null);
+            var currentMax = hashList[0].GetMax();
+            for (int i = 1; i < hashList.Length; i++)
+            {
+                var thisMax = hashList[i].GetMax();
+                if (thisMax != null)
+                    if (currentMax == null || thisMax.Key > currentMax.Key)
+                        currentMax = thisMax;
+            }
+            return new KeyValuePair<int, object>(currentMax.Key, currentMax.Value);
+        }
+
+        public KeyValuePair<int, object> ExtractMin()
+        {
+            if (hashList.Length == 0)
+                return new KeyValuePair<int, object>(-1, null);
             var currentMin = hashList[1].GetMin();
             for (int i = 1; i < hashList.Length; i++)
             {
                 var thisMin = hashList[i].GetMin();
-                if (thisMin.Key < currentMin.Key)
+                if (thisMin == null)
+                    continue;
+                if (currentMin == null || thisMin.Key < currentMin.Key)
                     currentMin = thisMin;
             }
-            return currentMin;
+            currentMin.Remove();
+            return new KeyValuePair<int, object>(currentMin.Key, currentMin.Value);
         }
 
-        public object GetMax()
+        public KeyValuePair<int, object> ExtractMax()
         {
             if (hashList.Length == 0)
-                return null;
+                return new KeyValuePair<int, object>(-1, null);
             var currentMax = hashList[1].GetMax();
             for (int i = 1; i < hashList.Length; i++)
             {
                 var thisMax = hashList[i].GetMax();
-                if (thisMax.Key < currentMax.Key)
-                    currentMax = thisMax;
+                if (thisMax != null)
+                    if (currentMax == null || thisMax.Key > currentMax.Key)
+                        currentMax = thisMax;
             }
-            return currentMax;
-        }
 
-        public object ExtractMin()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object ExtractMax()
-        {
-            throw new NotImplementedException();
+            currentMax.Remove();
+            return  new KeyValuePair<int, object>(currentMax.Key, currentMax.Value);
         }
     }
 
     class HashList
     {
-        private HashElement start;   
-        public HashList()
-        {
-        }
+        public HashElement Start;   
 
         public void Insert(KeyValuePair<int, object> kvp)
         {
-            var elem = new HashElement(kvp);
-            if (start == null)
+            var elem = new HashElement(kvp, this);
+            if (Start == null)
             {
-                start = elem;
+                Start = elem;
             }
             else
             {
-                start.Previous = elem;
-                elem.Next = start;
-                start = elem;
+                Start.Previous = elem;
+                elem.Next = Start;
+                Start = elem;
             }
         }
 
         public void Delete(int i)
         {
-            var s = start;
+            var s = Start;
             while (s != null)
             {
                 if (s.Key == i)
                 {
-                    s.Previous.Next = s.Next;
-                    if (s.Next != null)
-                        s.Next.Previous = s.Previous;
+                    s.Remove();
                     return;
                 }
                 s = s.Next;
@@ -122,7 +146,7 @@ namespace OMI
 
         public object Find(int i)
         {
-            var s = start;
+            var s = Start;
             while (s != null)
             {
                 if (s.Key == i)
@@ -132,37 +156,37 @@ namespace OMI
             return null;
         }
 
-        public KeyValuePair<int, object> GetMin()
+        public HashElement GetMin()
         {
-            var s = start;
+            var s = Start;
             int minValue = int.MaxValue;
-            var minObject = start.Value;
+            HashElement minKvP = null;
             while (s != null)
             {
                 if (s.Key < minValue)
                 {
                     minValue = s.Key;
-                    minObject = s.Value;
+                    minKvP = s;
                 }
                 s = s.Next;
             }
-            return new KeyValuePair<int, object>(minValue, minObject);
+            return minKvP;
         }
-        public KeyValuePair<int, object> GetMax()
+        public HashElement GetMax()
         {
-            var s = start;
+            var s = Start;
             int maxValue = int.MinValue;
-            var minObject = start.Value;
+            HashElement maxKvp = null;
             while (s != null)
             {
-                if (s.Key < maxValue)
+                if (s.Key > maxValue)
                 {
                     maxValue = s.Key;
-                    minObject = s.Value;
+                    maxKvp = s;
                 }
                 s = s.Next;
             }
-            return new KeyValuePair<int, object>(maxValue, minObject);
+            return maxKvp;
         } 
     }
 
@@ -172,11 +196,25 @@ namespace OMI
         public int Key;
         public HashElement Next;
         public HashElement Previous;
-
-        public HashElement(KeyValuePair<int, object> val )
+        public HashList Parent;
+        public HashElement(KeyValuePair<int, object> val, HashList parent )
         {
             Value = val.Value;
             Key = val.Key;
+            Parent = parent;
+        }
+
+        public void Remove()
+        {
+            if (Parent.Start == this)
+            {
+                Parent.Start = this.Next;
+            }
+
+            if (Previous != null)
+                Previous.Next = Next;
+            if (Next != null)
+                Next.Previous = Previous;
         }
     }
 }
