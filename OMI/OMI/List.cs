@@ -63,44 +63,44 @@ namespace OMI
             return new KeyValuePair<int, object>(-1, null);
         }
 
-        public object GetMin()
+        public KeyValuePair<int, object> GetMin()
         {
             if (items.Count > 0)
             {
-                return items[0].Value;
+                return items[0];
             }
-            return null;
+            return new KeyValuePair<int, object>(-1, null);
         }
 
-        public object GetMax()
+        public KeyValuePair<int, object> GetMax()
         {
             if (items.Count > 0)
             {
-                return items[items.Count - 1].Value;
+                return items[items.Count - 1];
             }
-            return null;
+            return new KeyValuePair<int, object>(-1, null);
         }
 
-        public object ExtractMin()
+        public KeyValuePair<int, object> ExtractMin()
         {
             if (items.Count > 0)
             {
                 KeyValuePair<int, object> item = items[0];
                 TryDelete(item.Key);
-                return item.Value;
+                return item;
             }
-            return null;
+            return new KeyValuePair<int, object>(-1, null); 
         }
 
-        public object ExtractMax()
+        public KeyValuePair<int, object> ExtractMax()
         {
             if (items.Count > 0)
             {
                 KeyValuePair<int, object> item = items[items.Count - 1];
                 TryDelete(item.Key);
-                return item.Value;
+                return item;
             }
-            return null;
+            return new KeyValuePair<int, object>(-1, null);
         }
 
         private int BinarySearch(int key, int min, int max)

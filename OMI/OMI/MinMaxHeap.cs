@@ -368,21 +368,27 @@ namespace OMI
                 uitvoer += ", " + Heap[i].Key;
             Console.WriteLine(uitvoer);
         }
-        public object ExtractMin()
+        public KeyValuePair<int, object> ExtractMin()
         {
             return Heap[0];
         }
-        public object ExtractMax()
+        public KeyValuePair<int, object> ExtractMax()
         {
-            return Heap[0];
+            
+            KeyValuePair<int, object>kvp = Heap[GetMaxGrandChild(0)];
+            if(TryDelete(Heap.IndexOf(kvp)))
+            {
+                return kvp;
+            }
+            else return new KeyValuePair<int,object>(-1, null);
         }
-        public object GetMax()
+        public KeyValuePair<int, object> GetMax()
         {
-            return Heap[0];
+            return Heap[(GetMaxGrandChild(0))];
         }
-        public object GetMin()
+        public KeyValuePair<int, object> GetMin()
         {
-            return Heap[0];
+            return Heap[GetMinGrandChild(0)];
         }
         public KeyValuePair<int, object> Search(int position)
         {
@@ -390,10 +396,14 @@ namespace OMI
         }
         public bool TryDelete(int position)
         {
+            Heap.RemoveAt(position);
+            buildMinMaxHeap();
             return true;
         }
         public bool TryAdd(KeyValuePair<int, object> invoer)
         {
+            Heap.Add(invoer);
+            buildMinMaxHeap();
             return true;
         }
     }

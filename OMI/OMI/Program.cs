@@ -10,6 +10,7 @@ namespace OMI
     {
         static void Main(string[] args)
         {
+
         }
     }
 }

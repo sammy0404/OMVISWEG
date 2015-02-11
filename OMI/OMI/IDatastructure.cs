@@ -11,10 +11,10 @@ namespace OMI
 
         KeyValuePair<int, object> Search(int i);
 
-        object GetMin();
-        object GetMax();
+        KeyValuePair<int, object> GetMin();
+        KeyValuePair<int, object> GetMax();
 
-        object ExtractMin();
-        object ExtractMax();
+        KeyValuePair<int, object> ExtractMin();
+        KeyValuePair<int, object> ExtractMax();
     }
 }
