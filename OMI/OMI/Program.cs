@@ -34,7 +34,7 @@ namespace OMI
 
             DS.Build(p.testData);
             Random rnd = new Random();
-            for(int s = 0; s<10; s++)
+            for(int s = 0; s<1000; s++)
             {
                 var kvp = p.testData[rnd.Next(p.testData.Count)];
                 bool found = kvp.Equals(DS.Search(kvp.Key));
@@ -50,9 +50,9 @@ namespace OMI
             // Ik ga ervan uit dat we distinct keys gebruiken.
             HashSet<KeyValuePair<int, object>> HS = new HashSet<KeyValuePair<int, object>>();
             Random r = new Random();
-            while(HS.Count < 25)
+            while(HS.Count < 60000)
             {
-                int key = r.Next(0, 1000);
+                int key = r.Next(0, 1000000);
                 string value = key.ToString();
                 HS.Add(new KeyValuePair<int, object>(key, value));
             }
