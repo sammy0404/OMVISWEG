@@ -46,11 +46,18 @@ namespace OMI
                                 sw.ElapsedMilliseconds);
             
             Random rnd = new Random();
-            sw.Restart();
+			bool found = true;
+			sw.Restart();
             for (int s = 0; s < nrOfSearches; s++)
             {
                 var kvp = p.testData[rnd.Next(p.testData.Count)];
-                bool found = kvp.Equals(DS.Search(kvp.Key));
+                found = kvp.Equals(DS.Search(kvp.Key));
+				if (!found)
+				{
+					Console.WriteLine("Defective search, plzz fix");
+					break;
+				}
+					
                 //Console.WriteLine(found + " " + kvp.Value);
                 //Console.WriteLine("minimum: " + DS.ExtractMin().Value + "; maximum: " + DS.ExtractMax().Value);
             }

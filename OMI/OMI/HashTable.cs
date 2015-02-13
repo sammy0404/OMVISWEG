@@ -21,7 +21,7 @@ namespace OMI
             {
                 int index = v.Key%hashList.Length;
                 hashList[index].Insert(v);
-                Console.WriteLine("inserted: "+ v.Key);
+                //Console.WriteLine("inserted: "+ v.Key);
             }
         }
 
