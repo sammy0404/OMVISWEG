@@ -9,18 +9,29 @@ namespace OMI
 {
     public class MinMaxHeap : IDatastructure
     {
-        public List<KeyValuePair<int, object>> Heap = new List<KeyValuePair<int, object>>();
+        KeyValuePair<int, object>[] Heap;
         int curSize;
         int maxSize;
         int compCount;
         string CPUTime;
+
+        public MinMaxHeap(int maxSize)
+        {
+            this.maxSize = maxSize;
+            Heap = new KeyValuePair<int, object>[maxSize + 1];
+        }
         public void Build(List<KeyValuePair<int, object>> values)
         {
+            Heap = new KeyValuePair<int, object>[Math.Max(values.Count + 1, maxSize)];
+            Heap[0] = new KeyValuePair<int, object>(int.MaxValue, null);
             curSize = values.Count;
             maxSize = int.MaxValue;
             compCount = 0;
             CPUTime = "";
-            Heap = values;
+            for (int i = 1; i <= values.Count; i++)
+            {
+                Heap[i] = values[i - 1];
+            }
             buildMinMaxHeap();
         }
         public void buildMinMaxHeap()
@@ -31,7 +42,7 @@ namespace OMI
                 percolateDown(i);
             myWatch.Stop();
             TimeSpan ts = myWatch.Elapsed;
-            CPUTime = "Elapsed Time is: "+ ts.Hours.ToString() + ts.Minutes.ToString() + ts.Seconds.ToString() ;
+            CPUTime = "Elapsed Time is: " + ts.Hours.ToString() + ts.Minutes.ToString() + ts.Seconds.ToString();
         }
         public void percolateDown(int pos)
         {
@@ -374,13 +385,14 @@ namespace OMI
         }
         public KeyValuePair<int, object> ExtractMax()
         {
-            
-            KeyValuePair<int, object>kvp = Heap[GetMaxGrandChild(0)];
-            if(TryDelete(Heap.IndexOf(kvp)))
-            {
-                return kvp;
-            }
-            else return new KeyValuePair<int,object>(-1, null);
+
+            //KeyValuePair<int, object>kvp = Heap[GetMaxGrandChild(0)];
+            //if(TryDelete(Heap.IndexOf(kvp)))
+            //{
+            //    return kvp;
+            //}
+            //else 
+            return new KeyValuePair<int, object>(-1, null);
         }
         public KeyValuePair<int, object> GetMax()
         {
@@ -390,20 +402,27 @@ namespace OMI
         {
             return Heap[GetMinGrandChild(0)];
         }
-        public KeyValuePair<int, object> Search(int position)
+        public KeyValuePair<int, object> Search(int key)
         {
-            return Heap[position];
+            for (int i = 1; i <= curSize; i++)
+            {
+                if (Heap[i].Key == key)
+                {
+                    return Heap[i];
+                }
+            }
+            return new KeyValuePair<int, object>(-1, null);
         }
         public bool TryDelete(int position)
         {
-            Heap.RemoveAt(position);
-            buildMinMaxHeap();
+            //Heap.RemoveAt(position);
+            //buildMinMaxHeap();
             return true;
         }
         public bool TryAdd(KeyValuePair<int, object> invoer)
         {
-            Heap.Add(invoer);
-            buildMinMaxHeap();
+            //Heap.Add(invoer);
+            //buildMinMaxHeap();
             return true;
         }
     }
