@@ -9,9 +9,8 @@ namespace OMI
     class AVLTree : IDatastructure
     {
         Node _root;
-
-        /*
-        public void TEST()
+        
+        /*public void TEST()
         {            
             TryAdd(new KeyValuePair<int, object>(17, 1));             
             TryAdd(new KeyValuePair<int, object>(6, 1));
@@ -30,8 +29,8 @@ namespace OMI
             TryAdd(new KeyValuePair<int, object>(3, 1));
             TryAdd(new KeyValuePair<int, object>(13, 1));
             TryAdd(new KeyValuePair<int, object>(1, 1));
-        }
-        */
+        }*/
+        
 
         public void Build(List<KeyValuePair<int, object>> kvpList)
         {
@@ -85,62 +84,59 @@ namespace OMI
                 parentNode.right = newNode;
 
             //AVL
-            Node a = newNode;
+            Node childNode = newNode;
             while (true)
             {
-                if (parentNode.right == a)
+                if (parentNode.right == childNode)
                     parentNode.avl--;
                 else
                     parentNode.avl++;
 
-                if (parentNode.avl == 2)
-                {
-                    if (a.avl == 1)
-                    {
-                        RoteerR(parentNode);
-                        parentNode.avl = 0;
-                        a.avl = 0;
-                        break;
-                    }
-                    else if (a.avl == -1)
-                    {
-                        RoteerL(a);
-                        RoteerR(parentNode);
-                        a.avl = 0;
-                        parentNode.avl = 0;
-                        a.parent.avl = 0;
-                        break;
-                    }
-                }
-                else if (parentNode.avl == -2)
-                {
-                    if (a.avl == 1)
-                    {
-                        RoteerR(a);
-                        RoteerL(parentNode);
-                        a.avl = 0;
-                        parentNode.avl = 0;
-                        a.parent.avl = 0;
-                        break;
-                    }
-                    else if (a.avl == -1)
-                    {
-                        RoteerL(parentNode);
-                        parentNode.avl = 0;
-                        a.avl = 0;
-                        break;
-                    }
-                }
+                if (AVL(parentNode, childNode))
+                    break;
 
                 if (parentNode == _root || parentNode.avl == 0)
                     break;
                 else
                 {
-                    a = parentNode;
+                    childNode = parentNode;
                     parentNode = parentNode.parent;
                 }
             }
             return true;
+        }
+
+        private bool AVL(Node parentNode, Node childNode)
+        {
+            if (parentNode.avl == 2)
+            {
+                if (childNode.avl == -1)
+                {
+                    RoteerL(childNode);                   
+                    childNode.parent.avl = 0;
+                }
+                //if (childNode.avl == 0)
+               //     childNode.avl = -1;
+                RoteerR(parentNode);
+                parentNode.avl = 0;
+                childNode.avl = 0;
+                return true;
+            }
+            else if (parentNode.avl == -2)
+            {
+                if (childNode.avl == 1)
+                {
+                    RoteerR(childNode);
+                    childNode.parent.avl = 0;
+                }
+               // if (childNode.avl == 0)
+               //     childNode.avl = 1;
+                RoteerL(parentNode);
+                parentNode.avl = 0;
+                childNode.avl = 0;
+                return true;
+            }
+            return false;
         }
 
         private void RoteerR(Node root)
@@ -192,51 +188,84 @@ namespace OMI
 
         public bool TryDelete(int k)
         {
+            bool isRoot = false;
+            bool isLeftChild = false;
+            Node y;
+            Node temp;
+
             var delNode = getNode(k);
             if (delNode == null)
                 return false;
             else
             {
-                bool isLeftChild = delNode.parent.left == delNode;
-                
+                if (delNode.parent == null)
+                    isRoot = true;
+                if (!isRoot)
+                    isLeftChild = delNode.parent.left == delNode;
+
                 //Move delNode to bottom of tree
                 if (delNode.left != null && delNode.right != null)
                 {
-                    Node y = getMinNode(delNode.right);
-                    Node temp = new Node(y.parent, 0, null);
+                    y = getMinNode(delNode.right);
+                    temp = new Node(y.parent, 0, null);
                     temp.left = y.left;
                     temp.right = y.right;
 
-                    // Give Y, delNode's links
-                    y.left = delNode.left;
-                    delNode.left.parent = y;
+                    // Give Y, delNode's links and avl
+                    y.avl = delNode.avl;
 
-                    y.right = delNode.right;
-                    delNode.right.parent = y;
+                    if (delNode.left != y)
+                    {
+                        y.left = delNode.left;
+                        delNode.left.parent = y;
+                    }
+                    else
+                        y.left = delNode;
+
+
+                    if (delNode.right != y)
+                    {
+                        y.right = delNode.right;
+                        delNode.right.parent = y;
+                    }
+                    else
+                        y.right = delNode;
+
 
                     y.parent = delNode.parent;
-                    if (isLeftChild)
-                        delNode.parent.left = y;
-                    else
-                        delNode.parent.right = y;
+                    if (!isRoot)
+                    {
+                        if (isLeftChild)
+                            delNode.parent.left = y;
+                        else
+                            delNode.parent.right = y;
+                    }
 
                     // Give delNode Y's links
                     delNode.left = temp.left;
-                    temp.left.parent = delNode;
+                    //temp.left.parent = delNode;
 
                     delNode.right = temp.right;
-                    temp.right.parent = delNode;
+                    if (temp.right != null)
+                        temp.right.parent = delNode;
 
-                    delNode.parent = temp.parent;
+                    if (temp.parent == delNode)
+                        delNode.parent = y;
+                    else
+                        delNode.parent = temp.parent;
                     if (temp.parent.left == y)
                         temp.parent.left = delNode;
-                    else
+                    else if (temp.parent.right == y)
                         temp.parent.right = delNode;
 
                     // Check if y is new root
                     if (y.parent == null)
                         _root = y;
+                    isLeftChild = delNode.parent.left == delNode;
                 }
+
+                if (!isRoot)
+                    isLeftChild = delNode.parent.left == delNode;
 
                 // Replace delNode with its left subTree
                 if (delNode.left != null)
@@ -281,24 +310,48 @@ namespace OMI
                 }
 
                 //Fix AVL
-                if (delNode.parent != null)
-                {                    
-                    Node childNode = delNode;
-                    Node parentNode = childNode.parent;
-                    while(parentNode != null)
-                    {
-                        if(parentNode.right == childNode)
-                            parentNode.avl++;
-                        else
-                            parentNode.avl--;
+                /* if (delNode.parent != null)
+                 {
+                     bool first = true;
+                     Node childNode = delNode;
+                     Node otherChild = null;
+                     Node parentNode = childNode.parent;
+                     while(true)
+                     {
+                         int oldAvl = parentNode.avl;
+                         if (parentNode.right == childNode || (first && !isLeftChild))
+                         {
+                             parentNode.avl++;
+                             otherChild = parentNode.left;
+                         }
+                         else
+                         {
+                             parentNode.avl--;
+                             otherChild = parentNode.right;
+                         }
 
-                        childNode = parentNode;
-                        parentNode = parentNode.parent;
+                         var nextparent = parentNode.parent;
+                         AVL(parentNode, otherChild);
+                             //break;
+                         //parentNode.avl = (oldAvl != 0) ? oldAvl : parentNode.avl;
 
-                        //nog meer AVL to come, ya~~y
-                    }
-                }
-
+                         if (parentNode == _root || parentNode.avl != 0)
+                             break;
+                         else
+                         {
+                            /* if (nextparent == null)
+                                 break;
+                             if (nextparent.left == parentNode.parent)
+                                 childNode = nextparent.left;
+                             else if (nextparent.right == parentNode.parent)
+                                 childNode = nextparent.right;
+                             else 
+                             childNode = parentNode;
+                             parentNode = parentNode.parent;
+                         }
+                         first = false;
+                     }
+                 }*/
                 return true;
             }
         }
