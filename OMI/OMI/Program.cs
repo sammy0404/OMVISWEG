@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using C5;
 
 namespace OMI
 {
     class Program
     {
         IDatastructure DS = null;
-        List<KeyValuePair<int, object>> testData;
+        List<System.Collections.Generic.KeyValuePair<int, object>> testData;
         List<int> deletionKeys;
 
         static int nrOfSearches  = 100000;
@@ -41,7 +42,7 @@ namespace OMI
                         DS = new HashTable(nrOfKeys);
                         break;
                     default:
-                        DS = new MinMaxHeap(nrOfKeys);
+                        DS = new IntervalHiep();
                         break;
                 }
                 p.DS = DS;
@@ -53,7 +54,28 @@ namespace OMI
                                     p.testData.Count,
                                     DS.GetType().Name,
                                     sw.ElapsedMilliseconds);
+                int min = int.MinValue;
+                int i = 0;
+                while (i < nrOfKeys)
+                {
+                    int newMin = DS.ExtractMin().Key;
+                    if (newMin < min)
+                        min++;
+                    min = newMin;
+                    i++;
+                    break;
+                }
 
+                int max = int.MaxValue;
+                int j = 0;
+                while (j < nrOfKeys)
+                {
+                    int newMax = DS.ExtractMax().Key;
+                    if (newMax > max)
+                        max++;
+                    max = newMax;
+                    j++;
+                }
                 sw.Restart();
                 p.Search();
                 sw.Stop();
@@ -103,22 +125,22 @@ namespace OMI
 
         private void seedDeletionKeys()
         {
-            KeyValuePair<int, object>[] list = new KeyValuePair<int, object>[nrOfDeletions];
+            System.Collections.Generic.KeyValuePair<int, object>[] list = new System.Collections.Generic.KeyValuePair<int, object>[nrOfDeletions];
             testData.CopyTo(0, list, 0, nrOfDeletions);
             deletionKeys = new List<int>(list.Select(x => x.Key));
         }
 
         private void seedTestData()
         {
-            var HS = new HashSet<KeyValuePair<int, object>>();
+            var HS = new System.Collections.Generic.HashSet<System.Collections.Generic.KeyValuePair<int, object>>();
             Random r = new Random();
             while (HS.Count < nrOfKeys)
             {
                 int key = r.Next(0, upperKeyBound);
                 string value = key.ToString();
-                HS.Add(new KeyValuePair<int, object>(key, value));
+                HS.Add(new System.Collections.Generic.KeyValuePair<int, object>(key, value));
             }
-            testData = new List<KeyValuePair<int,object>>(HS);
+            testData = new List<System.Collections.Generic.KeyValuePair<int, object>>(HS);
         }
 
 
