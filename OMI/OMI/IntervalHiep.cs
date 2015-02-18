@@ -39,27 +39,25 @@ namespace OMI
 
         public System.Collections.Generic.KeyValuePair<int, object> GetMin()
         {
-            int i = heap.Min();
+            int i = heap.FindMin();
             return new System.Collections.Generic.KeyValuePair<int, object>(i, i);
         }
 
         public System.Collections.Generic.KeyValuePair<int, object> GetMax()
         {
-            int i = heap.Max();
+            int i = heap.FindMax();
             return new System.Collections.Generic.KeyValuePair<int, object>(i, i);
         }
 
         public System.Collections.Generic.KeyValuePair<int, object> ExtractMin()
         {
-            int i = heap.Min();
-            heap.DeleteMin();
+            int i = heap.DeleteMin();
             return new System.Collections.Generic.KeyValuePair<int, object>(i, i);
 
         }
         public System.Collections.Generic.KeyValuePair<int, object> ExtractMax()
         {
-            int i = heap.Max();
-            heap.DeleteMax();
+            int i = heap.DeleteMax();
             return new System.Collections.Generic.KeyValuePair<int, object>(i, i);
         }
     }

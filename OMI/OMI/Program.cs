@@ -56,21 +56,20 @@ namespace OMI
                                     sw.ElapsedMilliseconds);
                 int min = int.MinValue;
                 int i = 0;
-                while (i < nrOfKeys)
+                while (i < nrOfKeys/2)
                 {
-                    int newMin = DS.ExtractMin().Key;
+                    int newMin = DS.GetMin().Key;
                     if (newMin < min)
                         min++;
                     min = newMin;
                     i++;
-                    break;
                 }
 
                 int max = int.MaxValue;
                 int j = 0;
-                while (j < nrOfKeys)
+                while (j < nrOfKeys/2)
                 {
-                    int newMax = DS.ExtractMax().Key;
+                    int newMax = DS.GetMax().Key;
                     if (newMax > max)
                         max++;
                     max = newMax;
