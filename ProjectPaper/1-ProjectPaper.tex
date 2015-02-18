@@ -40,16 +40,27 @@ Searching values and storing them in memory is a key concept in computer science
 \section{Beschrijving van de experimenten}
 We will seperate the experiment in several section:
 \subsection{Build}
-In the build we will ``build'' the different datastructures. 
-For the build operation we will build with 15 different unsorted datasets, this is devided in datasets of size $10.000, 100.00$ and $1.000.000$, each size occuring 5 times.  For each of these 15 options we will also test the sorted and reverse sorted set. Each dataset will be tested 30 times. This means that we conduct all tests with distinct 1350 datasets.
+\label{Build}
+In the build we have ``build'' the different datastructures. 
+For the build operation we have build from15 different unsorted datasets, this is divided in datasets of size $10.000, 100.00$ and $1.000.000$, each size occuring 5 times.  For each of these 15 options we have also tested the sorted and reverse sorted set. Each dataset is tested 30 times. This means that we have conducted all tests with 1350 distinct datasets.
 \subsection{Search}
-We will search in pre-build datastructures. The amount of searches is half the amount of elements in the datastructure. All the values of the searches are determined random and are garanteed to be in the datastructure. 
+We have searched in the pre-build datastructures of section \ref{Build}. The amount of searches is half the amount of elements in the datastructure. All the values of the searches are determined random and are garanteed to be in the datastructure. Like in the build section we have performed all search-tests 30 times. 
+
+We wanted to know if finding the minimum or maximum through the getMin (see section \ref{getMin}) and getMax (see section \ref{getMax}) methods of the datastructures are faster then searching for the minimum or maximum value with this search method. This test is conducted 1000 times on the datasets described in section \ref{Build}
 \subsection{Insert}
+We have constructed new datastructures from scratch by repeatedly inserting new elements. Like in section \ref{Build} we have tested the insert actions for 15 sets of elements (set sizes: $10.000, 100.000, 1.000.000$) and each of these tests have been performed 30 times.
 \subsection{Delete}
+We have performed delete operations on the pre-build datastructures of section \ref{Build}. The amount of deletes is half the amount of elements in the datastructure. All the values of the deletes are determined random and are garanteed to be in the datastructure. Like in the build section we have performed all delete-tests 30 times.
 \subsection{getMin}
+We performed getMin operations on the pre-build datastructures of section \ref{Build}. The amount of getMin operations in a test is 1000 since it returns always the same value. GetMin returns the lowest value in the datastructures. Like in the build section we performed all getMin-tests 30 times.
+\label{getMin}
 \subsection{getMax}
+We performed getMax operations on the pre-build datastructures of section \ref{Build}. The amount of getMax operations in a test is 1000 since it returns always the same value. GetMax returns the highest value in the datastructures. Like in the build section we performed all getMax-tests 30 times.
+\label{getMax}
 \subsection{extractMin}
+We performed extractMin operations on the pre-build datastructures of section \ref{Build}. The amount of extractMin operations in a test is half the amount of the elements in the datastructure. ExtractMin returns the lowest value in the datastructures and then deletes this entry. Like in the build section we performed all extractMin-tests 30 times.
 \subsection{extractMax}
+We performed extractMax operations on the pre-build datastructures of section \ref{Build}. The amount of extractMax operations in a test is half the amount of the elements in the datastructure. ExtractMax returns the highest value in the datastructures and then deletes this entry. Like in the build section we performed all extractMax-tests 30 times.
 \section{Weergave van eindresultaten}
 \subsection{Tabellen}
 \subsection{Grafieken}
