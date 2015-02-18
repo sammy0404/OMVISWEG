@@ -1,0 +1,66 @@
+\documentclass{article}
+
+\usepackage[a4paper]{geometry} 
+\usepackage[dutch]{babel}
+\usepackage{parskip}
+\usepackage{amsmath, amssymb, textcomp}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{enumerate} 
+\usepackage[official]{eurosym}
+\usepackage{url}
+\usepackage{float}
+\usepackage{listings} 
+\usepackage{gensymb}
+
+\title{Searching with data structures}
+\author{
+		Gerben Aalvanger\\ 
+	        	Studentnumber: 3987051 \\
+	        	Utrecht University
+			\and
+		Erik Visser\\
+	        	Studentnumber: 3470806 \\
+	        	Utrecht University
+	        	\and
+	        	William Kos\\
+	        	Studentnumber: 3933083\\
+	        	Utrecht University\\
+	        	\and
+	        	Sam van der Wal\\
+	        	Studentnumber: 3962652\\
+	        	Utrecht University}
+\date{\today \\Teacher: Peter de Waal}
+\begin{document}
+\maketitle
+\section{Introduction}
+Searching values and storing them in memory is a key concept in computer science. For optimal speed and complexity, data is stored in a lot of different data structures, for example a tree or a skiplist. Every data structure has its own advantages, some perform better on insertion, while other perform better on finding a specific value. In this document we will describe how we will compare data structures and actually compare them. We will start by proposing a research question and some sub-questions. Secondly we specify the problem we want to research and the scope of our project. After that we explain our experiments in terms of criteria, test data and scenarios. And last we will show in different ways our test results and compare them to eachother and end with a conclusion. 
+
+\section{Onderzoeksbeschrijving afgeleid van onderzoeksplan}
+\section{Beschrijving van de experimenten}
+We will seperate the experiment in several section:
+\subsection{Build}
+In the build we will ``build'' the different datastructures. 
+For the build operation we will build with 15 different unsorted datasets, this is devided in datasets of size $10.000, 100.00$ and $1.000.000$, each size occuring 5 times.  For each of these 15 options we will also test the sorted and reverse sorted set. Each dataset will be tested 30 times. This means that we conduct all tests with distinct 1350 datasets.
+\subsection{Search}
+We will search in pre-build datastructures. The amount of searches is half the amount of elements in the datastructure. All the values of the searches are determined random and are garanteed to be in the datastructure. 
+\subsection{Insert}
+\subsection{Delete}
+\subsection{getMin}
+\subsection{getMax}
+\subsection{extractMin}
+\subsection{extractMax}
+\section{Weergave van eindresultaten}
+\subsection{Tabellen}
+\subsection{Grafieken}
+\subsection{Toelichting}
+\subsection{Hypotheses en uitwerking statistische tests}
+ Welke veronderstellingen gaan we testen. Dit is een verdere uitwerking van de onderzoeksvraag. Minimaal 4 echt verschillende , meer mag ook. Denk aan:
+Vergelijkingen: Parameterinstelling 1 levert lagere looptijd parameterinstelling 2 Relaties: Er is een correlatie tussen het aantal klanten dat pizza's besteld en de looptijd van het algoritme
+Statistische test moeten worden uitgevoerd met Excel
+\section{Discussie en conclusie}
+\section{Reflectie}
+\subsection{In hoeverre heb je de onderzoeksvraag beantwoord?}
+\subsection{Heb je je onderzoeksplan kunnen uitvoeren of heb je het bijgesteld? Zo ja, hoe en waarom?}
+\subsection{Tegen welke moeilijkheden ben je aangelopen in het projetc?}
+\end{document}
