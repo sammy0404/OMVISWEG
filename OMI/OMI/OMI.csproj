@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5">
+      <HintPath>..\..\..\..\Desktop\C5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +47,7 @@
     <Compile Include="AVLTree.cs" />
     <Compile Include="HashTable.cs" />
     <Compile Include="IDatastructure.cs" />
+    <Compile Include="IntervalHiep.cs" />
     <Compile Include="List.cs" />
     <Compile Include="MinMaxHeap.cs" />
     <Compile Include="Program.cs" />
