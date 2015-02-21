@@ -14,8 +14,10 @@ namespace OMI
         {
             if (values.Count > 0)
             {
-                items = values;
-                QuickSort();
+                var temp = new KeyValuePair<int, object>[values.Count()];
+                values.CopyTo(temp, 0);
+                items = values.ToList();
+                QuickSort();                
             }
         }
 

@@ -185,8 +185,7 @@ namespace OMI
             }
         }
 
-
-        public bool TryDelete(int k)
+        public bool TryDelete(int k) 
         {
             bool isRoot = false;
             bool isLeftChild = false;
@@ -384,16 +383,16 @@ namespace OMI
 
         public KeyValuePair<int, object> ExtractMax() 
         {
-            var min = GetMin();
-            TryDelete(min.Key);
-            return min;
+            var max = GetMax();
+            TryDelete(max.Key);
+            return max;
         }
 
         public KeyValuePair<int, object> ExtractMin() 
         {
-            var max = GetMin();
-            TryDelete(max.Key);
-            return max;
+            var min = GetMin();
+            TryDelete(min.Key);
+            return min;
         }
     }
 

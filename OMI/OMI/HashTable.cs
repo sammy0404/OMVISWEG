@@ -80,7 +80,7 @@ namespace OMI
         {
             if (hashList.Length == 0)
                 return new KeyValuePair<int, object>(-1, null);
-            var currentMin = hashList[1].GetMin();
+            var currentMin = hashList[0].GetMin();
             for (int i = 1; i < hashList.Length; i++)
             {
                 var thisMin = hashList[i].GetMin();
@@ -97,7 +97,7 @@ namespace OMI
         {
             if (hashList.Length == 0)
                 return new KeyValuePair<int, object>(-1, null);
-            var currentMax = hashList[1].GetMax();
+            var currentMax = hashList[0].GetMax();
             for (int i = 1; i < hashList.Length; i++)
             {
                 var thisMax = hashList[i].GetMax();

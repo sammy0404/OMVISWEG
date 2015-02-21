@@ -27,7 +27,7 @@ namespace OMI
 
         public bool TryDelete(int i)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public System.Collections.Generic.KeyValuePair<int, object> Search(int i)
