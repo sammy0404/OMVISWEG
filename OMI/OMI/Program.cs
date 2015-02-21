@@ -38,6 +38,7 @@ namespace OMI
             while (true)
             {
                 seedTestData(nrOfKeys);
+                Console.WriteLine("Press T,L,H or I to test DS or X to terminate.");
                 switch (Console.ReadLine().ToUpper()[0])
                 {
                     case 'X':
@@ -51,9 +52,11 @@ namespace OMI
                     case 'H':
                         DS = new HashTable(nrOfKeys);
                         break;
-                    default:
+                    case 'I':
                         DS = new IntervalHiep();
                         break;
+                    default:
+                        return;
                 }
                 p.DS = DS;
 
@@ -278,12 +281,20 @@ namespace OMI
 
 		public static long measureTime<I>(Action<I> function, I input)
 		{
+            Thread t = new Thread(new ParameterizedThreadStart(doWork<I>));
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
-			function(input);
+            t.Start(Tuple.Create(function, input));
+            t.Join(60000); // 1 minute timeout
 			sw.Stop();
 			return sw.ElapsedMilliseconds;
 		}
+
+        public static void doWork<I>(object tuple)
+        {
+            var FuncPut = (Tuple<Action<I>,I>)tuple;
+            FuncPut.Item1(FuncPut.Item2);
+        }
 
 		private void Search(List<KeyValuePair<int, object>> testData)
         {
