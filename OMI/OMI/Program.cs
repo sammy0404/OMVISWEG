@@ -22,6 +22,7 @@ namespace OMI
         static int upperKeyBound = 5000000;
         static int nrOfDeletions = 10000;
         static int nrOfMinMax    = 10000;
+        static int timeOut       = MINUTE * 30;
 
 		static int[] dataSetSizes = {10000, 100000, 1000000};
 
@@ -175,6 +176,14 @@ namespace OMI
 								else
 									ds = (IDatastructure)Activator.CreateInstance(DS.GetType());
 
+                                // check repeated timeOuts
+                                if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                                {
+                                    runTimes.Clear();
+                                    runTimes.Add(-1);
+                                    break;
+                                }
+
                                 kvpAction = new Action<List<KeyValuePair<int, object>>>(ds.Build);
 								runTimes.Add(measureTime(kvpAction, testData));
 							}
@@ -215,9 +224,18 @@ namespace OMI
 					foreach (IDatastructure DS in dataStructures) // [List, Tree, Hiep, Table]
 					{
                         runTimes.Clear();
-						DS.Build(testData);                        
-						for (int t = 0; t < repeatTestSize; t++) // [0..29]
-							runTimes.Add(measureTime(dsAction, new Tuple<IDatastructure, List<int>>(DS, searchKeys)));
+						DS.Build(testData);
+                        for (int t = 0; t < repeatTestSize; t++) // [0..29]
+                        {
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
+                            runTimes.Add(measureTime(dsAction, new Tuple<IDatastructure, List<int>>(DS, searchKeys)));
+                        }
 
                         avgRunTime = getAvg(runTimes);
 						workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Value = DS.GetType().Name;
@@ -257,7 +275,16 @@ namespace OMI
                         runTimes.Clear();
                         DS.Build(testData);
                         for (int t = 0; t < repeatTestSize; t++) // [0..29]
+                        {
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
                             runTimes.Add(measureTime(extractAction, new Tuple<IDatastructure, int>(DS, min)));
+                        }
 
                         avgRunTime = getAvg(runTimes); 
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Value = DS.GetType().Name;
@@ -297,8 +324,17 @@ namespace OMI
                         runTimes.Clear();
                         DS.Build(testData);
                         for (int t = 0; t < repeatTestSize; t++) // [0..29]
-                           runTimes.Add(measureTime(extractAction, new Tuple<IDatastructure, int>(DS, max)));
-                        
+                        {
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
+                            runTimes.Add(measureTime(extractAction, new Tuple<IDatastructure, int>(DS, max)));
+                        }
+
                         avgRunTime = getAvg(runTimes); 
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Value = DS.GetType().Name;
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Style.Font.Color.SetColor(DSNameColor);
@@ -349,7 +385,15 @@ namespace OMI
                                     ds = (IDatastructure)Activator.CreateInstance(DS.GetType(), setSize);
                                 else
                                     ds = (IDatastructure)Activator.CreateInstance(DS.GetType());
-                                
+
+                                // check repeated timeOuts
+                                if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                                {
+                                    runTimes.Clear();
+                                    runTimes.Add(-1);
+                                    break;
+                                }
+
                                 runTimes.Add(measureTime(insertAction, new Tuple<IDatastructure,List<KeyValuePair<int,object>>>(ds,testData)));
                             }
 
@@ -397,6 +441,14 @@ namespace OMI
                             else
                                 ds = (IDatastructure)Activator.CreateInstance(DS.GetType());
 
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
+
                             ds.Build(testData);                            
                             runTimes.Add(measureTime(dsAction, new Tuple<IDatastructure, List<int>>(ds, deleteKeys)));
                         }
@@ -438,7 +490,16 @@ namespace OMI
                         runTimes.Clear();                     
                         DS.Build(testData);
                         for (int t = 0; t < repeatTestSize; t++) // [0..29]
+                        {
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
                             runTimes.Add(measureTime(DSAction, DS));
+                        }
 
                         avgRunTime = getAvg(runTimes); 
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Value = DS.GetType().Name;
@@ -477,8 +538,16 @@ namespace OMI
                         runTimes.Clear();     
                         DS.Build(testData);
                         for (int t = 0; t < repeatTestSize; t++) // [0..29]
+                        {
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
                             runTimes.Add(measureTime(DSAction, DS));
-
+                        }
                         avgRunTime = getAvg(runTimes); 
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Value = DS.GetType().Name;
                         workbook.Cells[1 + functionOffset, DSIndex + DSoffset].Style.Font.Color.SetColor(DSNameColor);
@@ -521,6 +590,14 @@ namespace OMI
                                 ds = (IDatastructure)Activator.CreateInstance(DS.GetType(), setSize);
                             else
                                 ds = (IDatastructure)Activator.CreateInstance(DS.GetType());
+
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
 
                             ds.Build(testData);                            
                            runTimes.Add(measureTime(extractAction, new Tuple<IDatastructure, int>(ds, extractAmount)));
@@ -569,6 +646,14 @@ namespace OMI
                                 ds = (IDatastructure)Activator.CreateInstance(DS.GetType(), setSize);
                             else
                                 ds = (IDatastructure)Activator.CreateInstance(DS.GetType());
+
+                            // check repeated timeOuts
+                            if (t == 2 && runTimes.Sum() > (timeOut * 2 - 500))
+                            {
+                                runTimes.Clear();
+                                runTimes.Add(-1);
+                                break;
+                            }
 
                             ds.Build(testData);          
                             runTimes.Add(measureTime(extractAction, new Tuple<IDatastructure, int>(ds, extractAmount)));
@@ -632,7 +717,7 @@ namespace OMI
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
             t.Start(Tuple.Create(function, input));
-            if (!t.Join(MINUTE * 30))
+            if (!t.Join(timeOut))
                 t.Abort();
 			sw.Stop();
 			return sw.ElapsedMilliseconds;
