@@ -1,0 +1,62 @@
+4.4.2 Hyptheses testing
+For all our hypotheses we use a dependend sample T-test to identify whether a hypotheses holds or not. We create new sub-hypotheses for all our hypotheses. 
+A hypothesis consists of 3 parts, which we will name A, B and C. The general structure of a hypothesis is:
+
+The A action wil be executed fastest by B1 and B2 ... and slowest by C1 and C2 .. .
+
+Here A determines the action executed, actions are specified in section 3
+B = {B1 .. Bn} refere to n datastructures, which should execute A the fastest
+C = {C1 .. Cn} refere to n datastructures, which should execute A teh slowest
+We also define D as the set of all 
+
+To make the general hypotheses true, several sub-hypotheses should be accepted
+For all combinations b \elem B and d \elem D-B, create the next hypothesis:
+	b is significantly faster than d on A, with every datastructure-size {10.000, 100.000, 1.000.000}. 
+For all combinations c \elem C and d \elem D-C, create the next hypothesis:
+	c is significantly slower than d on A, with every datastructure-size {10.000, 100.000, 1.000.000}. 
+
+For testing, we used excel's one-sided T-tests. To check correctness of our implementation, we checked the first outcomes of our handy excel-sheet to an online T-tester.
+
+
+4.4.3 Statistics results
+
+1. The build action will be executed the fastest by the hash table and slowest by the Min-Max
+tree.
+	This hypothesis is not accepted, since the Min-Max tree is faster than the hash table on the build action.
+
+2. The search action will be executed the fastest by the hash table and the AVL tree and the
+slowest by the Min-Max tree.
+	This hypothesis is accepted, since each sub-hypothesis is accepted. Th maximum p-vale of the sub-hypotheses is 1.61*E-6
+3. The insert action will be executed the fastest by the hash table and slowest by the list.
+	On the unsorted list is the Min-Max tree significantly faster than the hash table. Here a sub-hypothesis is not accepted.
+	However, on the sorted and reverse sorted list, the hash is indeed significantly faster than the Min-Max tree. Here our main hypothesis is accepted.
+
+4. The delete action will be executed the fastest by the hash table and the
+slowest by the list.
+	In this test, we did not use the values of the Min-Max heap, since the delete function is not defined on the Min-Max heap. 
+	The hypothesis is accepted on the bigger datastructures (+100.000 elements), with a maximum p-value of 0,003450688.
+
+5. The getMin action will be executed the fastest by the list and the Min-Max tree and the
+slowest by the hash table.
+	It appears that the List and the Min-Max heap are significantly faster than the hash table. The hash is also significantly slower than all other datastructures.
+	However, the List and the Min-Max tree are not significantly faster than the AVL-tree.
+	The hypothesis is not accepted.
+
+6. The extractMin action will be executed the fastest by the Min-Max tree
+and the slowest by the hash table.
+	This hypothesis is not accepted, since the AVL-tree is significantly faster than the Min-Max tree.
+
+7. The getMax action will be executed the fastest by the list and the Min-Max tree and the
+slowest by hash table.
+	It appears that the List and the Min-Max heap are significantly faster than the hash table. The hash is also significantly slower than all other datastructures.
+	However, the List and the Min-Max tree are not significantly faster than the AVL-tree.
+	The hypothesis is not accepted.
+
+8. The extractMax action will be executed the fastest by the list and the Min-Max tree and
+the slowest by the hash table.
+	This hypothesis is not accepted, since the AVL-tree is significantly faster than the Min-Max tree.
+
+4.4.4 Origin of the results
+
+
+		
