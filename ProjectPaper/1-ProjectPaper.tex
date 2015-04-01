@@ -19,25 +19,25 @@
 \title{Searching with data structures}
 \author{
 		Gerben Aalvanger\\ 
-	        	Studentnumber: 3987051 \\
+	        	Student-number: 3987051 \\
 	        	Utrecht University
 			\and
 		Erik Visser\\
-	        	Studentnumber: 3470806 \\
+	        	Student-number: 3470806 \\
 	        	Utrecht University
 	        	\and
-	        	William Kos\\
-	        	Studentnumber: 3933083\\
+		William Kos\\
+	        	Student-number: 3933083\\
 	        	Utrecht University\\
 	        	\and
-	        	Sam van der Wal\\
-	        	Studentnumber: 3962652\\
+		Sam van der Wal\\
+	        	Student-number: 3962652\\
 	        	Utrecht University}
 \date{\today \\Teacher: Peter de Waal}
 \begin{document}
 \maketitle
 \section{Introduction}
-Searching values and storing them in memory is a key concept in computer science. For optimal speed and complexity, data is stored in a lot of different data structures, for example a tree or a skiplist. Every data structure has its own advantages, some perform better on insertion, while other perform better on finding a specific value. In this document we will describe how we will compare data structures and actually compare them. We will start by proposing a research question and some sub-questions. Secondly we specify the problem we want to research and the scope of our project. After that we explain our experiments in terms of criteria, test data and scenarios. And last we will show in different ways our test results and compare them to eachother and end with a conclusion. 
+Searching values and storing them in memory is a key concept in computer science. For optimal speed and complexity, data is stored in a lot of different data structures, for example a tree or a skip-list. Every data structure has its own advantages, some perform better on insertion, while other perform better on finding a specific value. In this document we will describe how we will compare data structures and actually compare them. We will start by proposing a research question and some sub-questions. Secondly we specify the problem we want to research and the scope of our project. After that we explain our experiments in terms of criteria, test data and scenarios. And last we will show in different ways our test results and compare them to each other and end with a conclusion. 
 
 \section{Research description}
 In this research the question "Which data structure has the shortest duration on given actions" has been put central. We have used 4 data structures to get the answer to this question. To get the best insight in this question with 4 data structures we had chosen to take data structures which differ a lot from each other, namely:
@@ -52,19 +52,19 @@ The list and hash table are both straight forward data structures, but there are
 Part of the research was performing statistics on the results gained from the experiments. The focus laid at the average and the standard deviation of the performed actions on special cases. Because the same tests were performed multiple times we have chosen for both the average and the standard deviation to gain a good insight in the overall results retrieved from the experiments. 
 
 \section{Experiment description}
-We will seperate the experiment in several section:
+We will separate the experiment in several section:
 \subsection{Build}
 \label{Build}
 In the build we have ``build'' the different datastructures. 
-For the build operation we have build from15 different unsorted datasets, this is divided in datasets of size $10.000, 100.00$ and $1.000.000$, each size occuring 5 times.  For each of these 15 options we have also tested the sorted and reverse sorted set. Each dataset is tested 30 times. This means that we have conducted all tests with 1350 distinct datasets.
+For the build operation we have build from 15 different unsorted datasets, this is divided in datasets of size $10.000, 100.00$ and $1.000.000$, each size occurring 5 times.  For each of these 15 options we have also tested the sorted and reverse sorted set. Each dataset is tested 30 times. This means that we have conducted all tests with 1350 distinct datasets.
 \subsection{Search}
-We have searched in the pre-build datastructures of section \ref{Build}. The amount of searches is half the amount of elements in the datastructure. All the values of the searches are determined random and are garanteed to be in the datastructure. Like in the build section we have performed all search-tests 30 times. 
+We have searched in the pre-build datastructures of section \ref{Build}. The amount of searches is half the amount of elements in the datastructure. All the values of the searches are determined random and are guaranteed to be in the datastructure. Like in the build section we have performed all search-tests 30 times. 
 
 We wanted to know if finding the minimum or maximum through the getMin (see section \ref{getMin}) and getMax (see section \ref{getMax}) methods of the datastructures are faster then searching for the minimum or maximum value with this search method. This test is conducted 1000 times on the datasets described in section \ref{Build}
 \subsection{Insert}
 We have constructed new datastructures from scratch by repeatedly inserting new elements. Like in section \ref{Build} we have tested the insert actions for 15 sets of elements (set sizes: $10.000, 100.000, 1.000.000$) and each of these tests have been performed 30 times.
 \subsection{Delete}
-We have performed delete operations on the pre-build datastructures of section \ref{Build}. The amount of deletes is half the amount of elements in the datastructure. All the values of the deletes are determined random and are garanteed to be in the datastructure. Like in the build section we have performed all delete-tests 30 times.
+We have performed delete operations on the pre-build datastructures of section \ref{Build}. The amount of deletes is half the amount of elements in the datastructure. All the values of the deletes are determined random and are guaranteed to be in the datastructure. Like in the build section we have performed all delete-tests 30 times.
 \subsection{getMin}
 We performed getMin operations on the pre-build datastructures of section \ref{Build}. The amount of getMin operations in a test is 1000 since it returns always the same value. GetMin returns the lowest value in the datastructures. Like in the build section we performed all getMin-tests 30 times.
 \label{getMin}
@@ -93,7 +93,7 @@ We performed extractMax operations on the pre-build datastructures of section \r
 	&\textbf{List} &  \textbf{AVL Tree} &  \textbf{Interval Heap} &  \textbf{Hash table} \\ \hline 
 	\textbf{10.000}  & 6 \textpm 0  & 1 \textpm 0 & 1118,4 \textpm 4,5 & 1 \textpm 0\\ \hline
 	\textbf{100.000} &75,8 \textpm 3,4  &  12,8 \textpm 0,7 & 115007,4\textpm 3112,6& 6,8 \textpm 1,8\\ \hline
-	\textbf{1.000.000} &  991 \textpm 40,3 &211,4  \textpm 11,9 &timeout &106,6 \textpm 5,8\\	
+	\textbf{1.000.000} &  991 \textpm 40,3 &211,4  \textpm 11,9 & timeout &106,6 \textpm 5,8\\	
     \hline
     \end{tabular}
 \end{center}
@@ -157,11 +157,13 @@ We performed extractMax operations on the pre-build datastructures of section \r
     \hline
     \end{tabular}
 \end{center}
-\subsection{Grafieken}
+\subsection{Graphs}
+\includegraphics{MinGrafiek}\\*\\*
+\includegraphics{MaxGrafiek}
 \subsection{Toelichting}
 \subsection{Hypotheses en uitwerking statistische tests}
 \subsubsection{Hypotheses changes}
-While testing the already changed second hypotheses: "The search action will be executed the fastest by the hash table and the AVL tree and the slowest by the Min-Max tree", we noticed a signficant difference between the speed of the hash table and the AVL tree. We realized that we should be more strict in our hypotheses and therefor we changed some other hypotheses before testing them. We changed the following hypotheses: 
+While testing the already changed second hypotheses: "The search action will be executed the fastest by the hash table and the AVL tree and the slowest by the Min-Max tree", we noticed a significant difference between the speed of the hash table and the AVL tree. We realized that we should be more strict in our hypotheses and therefore we changed some other hypotheses before testing them. We changed the following hypotheses: 
 \begin{itemize}
 \item The build action will be executed the fastest by the hash table and slowest by the Min-Max tree.
 \item The search action will be executed the fastest by the hash table and the AVL tree and the slowest by\sout{ the  list and }the Min-Max tree.
